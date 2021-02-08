@@ -1,1 +1,1 @@
-export {} from "https://deno.land/x/oak@5.0.0/mod.ts"
+export {Application} from "https://deno.land/x/oak/mod.ts"
