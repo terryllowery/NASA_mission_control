@@ -1,5 +1,7 @@
 import {Application, send} from "./dep.ts"
 
+import api from "./api.ts"
+
 const app = new Application()
 const PORT = 8000
 
@@ -16,6 +18,8 @@ app.use(async(ctx, next) => {
     const delta = Date.now() - start;
     ctx.response.headers.set("X-Response-Time", `${delta}ms`);
 });
+app.use(api.routes())
+
 app.use(async (ctx) => {
     const filePath = ctx.request.url.pathname
     const fileWhitelist = [
@@ -29,16 +33,6 @@ app.use(async (ctx) => {
     }
     
 });
-app.use((ctx) => {
-    ctx.response.body = `
-        #     #    #     #####     #    
-        ##    #   # #   #     #   # #   
-        # #   #  #   #  #        #   #  
-        #  #  # #     #  #####  #     # 
-        #   # # #######       # ####### 
-        #    ## #     # #     # #     # 
-        #     # #     #  #####  #     # `
-})
 
 if(import.meta.main) {
 await app.listen({
