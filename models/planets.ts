@@ -1,10 +1,8 @@
 import {join, BufReader, parse, _} from '../dep.ts';
 
-interface Planets {
-    [key: string] : string
-}
+type Planet = Record<string, string> 
 
-let planets : Array<Planets>
+let planets : Array<Planet>
 
 async function loadPlanetsData() {
     const path = join("./data", "kep_planets.csv");
@@ -16,7 +14,7 @@ async function loadPlanetsData() {
     });
 
     Deno.close(file.rid)
-    const planets = (result as Array<Planets>).filter((planet) => {
+    const planets = (result as Array<Planet>).filter((planet) => {
         const planetaryRadius  = Number(planet["koi_prad"]);
         const stellarMass = Number(planet["koi_smass"]);
         const stellarRadius = Number(planet["koi_srad"]);
@@ -42,6 +40,6 @@ planets = await loadPlanetsData();
 
 console.log(`Number of habitable planets found is ${planets.length}`)
 
-export function getAllPlanets() : Array<Planets> {
+export function getAllPlanets() : Array<Planet> {
     return planets
 }
