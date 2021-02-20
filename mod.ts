@@ -18,7 +18,10 @@ app.use(async(ctx, next) => {
     const delta = Date.now() - start;
     ctx.response.headers.set("X-Response-Time", `${delta}ms`);
 });
+
+// Routes 
 app.use(api.routes())
+app.use(api.allowedMethods())
 
 app.use(async (ctx) => {
     const filePath = ctx.request.url.pathname
